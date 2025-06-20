@@ -27,7 +27,7 @@ That's it. No more random right-clicks.
 
 ## Installation & Usage
 
-1.  **Download:** Go to the [**Releases page**](https://github.com/achendev/DisableCtrlClick/releases) and download the latest `DisableCtrlClick.dmz`.
+1.  **Download:** Go to the [**Releases page**](https://github.com/achendev/DisableCtrlClick/releases) and download the latest `DisableCtrlClick.dmg`.
 2.  **Install:** Open the file and drag `DisableCtrlClick.app` to your `/Applications` folder.
 3.  **Launch:** Open the app from your Applications folder.
 4.  **Grant Permissions:** On the first launch, the app will prompt you to grant permissions and then quit. You must enable **Accessibility** and **Input Monitoring** for `DisableCtrlClick` in:
