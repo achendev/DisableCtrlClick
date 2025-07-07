@@ -4,6 +4,15 @@
   <img src="DisableCtrlClick.png" alt="App Icon" width="128">
 </p>
 
+<p align="center">
+  <a href="https://github.com/achendev/DisableCtrlClick/releases">
+    <img src="https://img.shields.io/github/downloads/achendev/DisableCtrlClick/total.svg" alt="Total Downloads">
+  </a>
+  <a href="https://github.com/achendev/DisableCtrlClick">
+    <img src="https://img.shields.io/github/stars/achendev/DisableCtrlClick?style=social" alt="Star on GitHub">
+  </a>
+</p>
+
 Are you tired of accidentally opening the context menu when you're just trying to use the Control key? Me too.
 
 Many applications, especially in programming, design, and gaming, use `Control` as a modifier for primary actions. If you're used to a two-finger tap or a dedicated mouse button for right-clicking, the default `Ctrl-Click` behavior can be an annoying interruption. This app fixes that.
