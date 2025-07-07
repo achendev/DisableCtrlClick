@@ -47,7 +47,6 @@ else
 fi
 
 # Use AppleScript to set the DMG window properties
-{
 osascript <<APPLESCRIPT
 tell application "Finder"
   -- Use the direct path for reliability
@@ -58,7 +57,7 @@ tell application "Finder"
     -- Wait in a loop until Finder can actually see the items.
     -- This prevents the "object not found" race condition.
     with timeout of 10 seconds
-        repeat until (exists item "'$APP_BUNDLE'" of container window) and (exists item "Applications" of container window)
+        repeat until (exists item "Applications" of container window)
             delay 0.5
         end repeat
     end timeout
@@ -67,27 +66,19 @@ tell application "Finder"
     set current view of container window to icon view
     set toolbar visible of container window to false
     set statusbar visible of container window to false
-    set the bounds of container window to {400, 100, 1040, 580}
+    set the bounds of container window to {400, 100, 800, 320}
     
     set viewOptions to the icon view options of container window
     set arrangement of viewOptions to not arranged
     set icon size of viewOptions to 128
     
     $SET_BACKGROUND_COMMAND
-    
-    set position of item "'$APP_BUNDLE'" of container window to {150, 250}
-    set position of item "Applications" of container window to {490, 250}
-    
-    -- Update and close to save the view settings
-    update without registering applications
-    delay 1
+
     close
     
   end tell
 end tell
 APPLESCRIPT
-} &
-sleep 5
 
 # 4. Unmount the temporary image
 echo "▶ Unmounting temporary volume..."
