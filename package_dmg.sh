@@ -8,18 +8,18 @@ DMG_VOLUME_NAME="$APP_NAME"
 DMG_BACKGROUND_IMG="dmg_background.png"
 FINAL_DMG_NAME="${APP_NAME}.dmg"
 
+# --- Main Script ---
+echo "▶ Creating DMG for $APP_NAME..."
+
+# 0. Build the app
+./build.sh
+
 # --- Pre-flight Checks ---
 if [ ! -d "$APP_BUNDLE" ]; then
     echo "❌ Error: App bundle '$APP_BUNDLE' not found."
     echo "Please run build.sh first."
     exit 1
 fi
-
-# --- Main Script ---
-echo "▶ Creating DMG for $APP_NAME..."
-
-# 0. Build the app
-./build.sh
 
 # 1. Create a temporary read-write disk image
 TEMP_DMG="temp_${FINAL_DMG_NAME}"
