@@ -26,7 +26,8 @@ That's it. No more random right-clicks.
 ## Features
 
 *   ✅ **Lightweight & Native:** A simple Swift app with minimal resource usage.
-*   ✅ **Menubar App:** Lives discreetly in your menubar. Cmd + Drag away to remove from menu bar.
+*   ✅ **Configurable via Menubar:** Click the icon to temporarily disable the functionality or quit the app.
+*   ✅ **Menubar App:** Lives discreetly in your menubar. Cmd+Drag to hide it, and launch the app again to bring it back.
 *   ✅ **Starts at Login:** Automatically registers itself to launch when you log in. Set it and forget it.
 *   ✅ **Zero Config:** Just run it and grant permissions. That's it.
 *   ✅ **Modern & Secure:** Built with modern APIs and requires no special privileges beyond what's necessary to function.
@@ -45,7 +46,9 @@ That's it. No more random right-clicks.
 
 5.  **Done!** Relaunch the app one more time. It is now running and will launch automatically every time you log in. You can enjoy a `Ctrl-Click`-free normal behaviour.
 
-The app will show a small icon in your menubar. You can remove it by holding `⌘` (Command) and dragging the icon out of the menubar.
+The app will show a small icon in your menubar.
+*   Click the icon to open a menu where you can temporarily disable the functionality or quit the app.
+*   You can hide the icon by holding `⌘` (Command) and dragging it out of the menubar. If you want it back, just launch the app again.
 
 ## Building from Source
 
@@ -65,7 +68,7 @@ If you prefer to build the app yourself:
 
 5.  Drag to /Applications, launch it. It will be added to 'Open at Login' automatically.
 
-6.  Grant Accessibility permission in System Settings.
+6.  Grant Accessibility and Input Monitoring permissions in System Settings.
 
 ## Troubleshooting 
 
@@ -73,8 +76,14 @@ App is provided 'as is' and without any warranty, express or implied
 
 Tested on macOS Sequoia 15.2
 
-Quit the app - `killall DisableCtrlClick`
-Reset permissions - `tccutil reset Accessibility  com.usr.DisableCtrlClick`
+**How to Quit**
+Click the menubar icon and select "Quit". If you have hidden the icon, you can either launch the app again to show it, or use the command `killall DisableCtrlClick` in your Terminal.
+
+**How to Reset Permissions**
+If the app is not working, try resetting its permissions:
+    ```bash
+    tccutil reset Accessibility com.usr.DisableCtrlClick
+    ```
 
 ## License
 

@@ -42,7 +42,7 @@ private func eventTapCallback(
 
     switch type {
     case .leftMouseDown, .leftMouseUp, .leftMouseDragged:
-        if event.flags.contains(.maskControl) {
+        if appDelegate.isEnabled && event.flags.contains(.maskControl) {
             var f = event.flags
             f.remove(.maskControl)
             event.flags = f
@@ -67,13 +67,12 @@ private func eventTapCallback(
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     var eventTap: CFMachPort?
+    var isEnabled = true
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         guard haveRequiredPermissions() else { requestPermissionsAndQuit() }
 
-        // **NEW:** Automatically register the app to "Open at Login".
-        // This uses the modern, recommended API and will only run on macOS 13+.
-        // It does nothing if the app is already registered.
+        // Automatically register the app to "Open at Login".
         if #available(macOS 13.0, *) {
             do {
                 try SMAppService.mainApp.register()
@@ -82,6 +81,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
+        setupStatusItem()
+        setupEventTap()
+    }
+
+    private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let button = statusItem.button {
@@ -95,6 +99,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.behavior = .removalAllowed
         }
         
+        // Create Menu
+        let menu = NSMenu()
+        
+        let enabledMenuItem = NSMenuItem(title: "Enabled", action: #selector(toggleEnabled(_:)), keyEquivalent: "")
+        enabledMenuItem.state = isEnabled ? .on : .off
+        menu.addItem(enabledMenuItem)
+        
+        menu.addItem(NSMenuItem.separator())
+        
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        
+        statusItem.menu = menu
+    }
+
+    private func setupEventTap() {
         let eventMask = (
             1 << CGEventType.leftMouseDown.rawValue |
             1 << CGEventType.leftMouseUp.rawValue   |
@@ -117,6 +136,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
         CGEvent.tapEnable(tap: eventTap, enable: true)
+    }
+
+    @objc private func toggleEnabled(_ sender: NSMenuItem) {
+        isEnabled.toggle()
+        sender.state = isEnabled ? .on : .off
+    }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        // If the user re-launches the app, show the status bar icon if it was hidden.
+        statusItem?.isVisible = true
+        return true
     }
 }
 
