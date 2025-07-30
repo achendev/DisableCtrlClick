@@ -74,7 +74,7 @@ If you prefer to build the app yourself:
 
 App is provided 'as is' and without any warranty, express or implied
 
-Tested on macOS Sequoia 15.2
+Requires macOS 13.0 (Ventura) or later.
 
 **How to Quit**
 Click the menubar icon and select "Quit". If you have hidden the icon, you can either launch the app again to show it, or use the command `killall DisableCtrlClick` in your Terminal.
