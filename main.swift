@@ -69,16 +69,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var eventTap: CFMachPort?
     var isEnabled = true
 
+    // Setting for "Open at Login", persisted in UserDefaults. Defaults to true.
+    var openAtLogin: Bool {
+        get { UserDefaults.standard.object(forKey: "openAtLogin") as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: "openAtLogin") }
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         guard haveRequiredPermissions() else { requestPermissionsAndQuit() }
 
-        // Automatically register the app to "Open at Login".
-        if #available(macOS 13.0, *) {
-            do {
-                try SMAppService.mainApp.register()
-            } catch {
-                print("Failed to register for login: \(error.localizedDescription)")
-            }
+        // Register to "Open at Login" only if the user has it enabled.
+        if openAtLogin {
+            updateLoginItem(enabled: true)
         }
         
         setupStatusItem()
@@ -105,6 +107,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let enabledMenuItem = NSMenuItem(title: "Enabled", action: #selector(toggleEnabled(_:)), keyEquivalent: "")
         enabledMenuItem.state = isEnabled ? .on : .off
         menu.addItem(enabledMenuItem)
+        
+        let loginMenuItem = NSMenuItem(title: "Open at Login", action: #selector(toggleOpenAtLogin(_:)), keyEquivalent: "")
+        loginMenuItem.state = openAtLogin ? .on : .off
+        menu.addItem(loginMenuItem)
         
         menu.addItem(NSMenuItem.separator())
         
@@ -141,6 +147,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func toggleEnabled(_ sender: NSMenuItem) {
         isEnabled.toggle()
         sender.state = isEnabled ? .on : .off
+    }
+    
+    @objc private func toggleOpenAtLogin(_ sender: NSMenuItem) {
+        openAtLogin.toggle()
+        sender.state = openAtLogin ? .on : .off
+        updateLoginItem(enabled: openAtLogin)
+    }
+
+    private func updateLoginItem(enabled: Bool) {
+        if #available(macOS 13.0, *) {
+            do {
+                if enabled {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+            } catch {
+                print("Failed to \(enabled ? "register" : "unregister") for login: \(error.localizedDescription)")
+            }
+        }
     }
     
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

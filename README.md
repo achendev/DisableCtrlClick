@@ -26,9 +26,9 @@ That's it. No more random right-clicks.
 ## Features
 
 *   ✅ **Lightweight & Native:** A simple Swift app with minimal resource usage.
-*   ✅ **Configurable via Menubar:** Click the icon to temporarily disable the functionality or quit the app.
+*   ✅ **Configurable via Menubar:** Click the icon to temporarily disable the functionality, toggle "Open at Login", or quit the app.
 *   ✅ **Menubar App:** Lives discreetly in your menubar. Cmd+Drag to hide it, and launch the app again to bring it back.
-*   ✅ **Starts at Login:** Automatically registers itself to launch when you log in. Set it and forget it.
+*   ✅ **Starts at Login (Optional):** Automatically starts when you log in. This can be toggled from the app's menu.
 *   ✅ **Zero Config:** Just run it and grant permissions. That's it.
 *   ✅ **Modern & Secure:** Built with modern APIs and requires no special privileges beyond what's necessary to function.
 *   ✅ **Transparent & Tiny:** It's so small you can literally read the full code of the app or feed it to any AI to understand exactly what it does and what you're running on your Mac.
@@ -44,10 +44,10 @@ That's it. No more random right-clicks.
     *   `System Settings > Privacy & Security > Accessibility`
     > **Why?** This is required for any application that needs to see and modify your mouse or keyboard events system-wide. The app only looks for `Ctrl-Click` and does nothing else.
 
-5.  **Done!** Relaunch the app one more time. It is now running and will launch automatically every time you log in. You can enjoy a `Ctrl-Click`-free normal behaviour.
+5.  **Done!** Relaunch the app one more time. It is now running and will launch automatically every time you log in by default. You can change this behavior from the menubar icon.
 
 The app will show a small icon in your menubar.
-*   Click the icon to open a menu where you can temporarily disable the functionality or quit the app.
+*   Click the icon to open a menu where you can temporarily disable the functionality, control whether it opens at login, or quit the app.
 *   You can hide the icon by holding `⌘` (Command) and dragging it out of the menubar. If you want it back, just launch the app again.
 
 ## Building from Source
@@ -66,7 +66,7 @@ If you prefer to build the app yourself:
     ```
 4.  The `DisableCtrlClick.app` bundle will be created in the project directory. You can then move it to your `/Applications` folder.
 
-5.  Drag to /Applications, launch it. It will be added to 'Open at Login' automatically.
+5.  Drag to /Applications, launch it. It will be added to 'Open at Login' automatically by default.
 
 6.  Grant Accessibility and Input Monitoring permissions in System Settings.
 
