@@ -4,7 +4,7 @@ set -euo pipefail
 APP_NAME="DisableCtrlClick"
 PNG="DisableCtrlClick.png"
 APP="$APP_NAME.app"
-MACOS_TARGET="13.0"
+MACOS_TARGET="10.0"
 
 #–– 1. Generate multi-resolution .icns file from the .png –––––––––––––––
 ICONSET="$APP_NAME.iconset"; ICNS="$APP_NAME.icns"
