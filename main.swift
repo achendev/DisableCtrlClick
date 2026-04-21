@@ -37,7 +37,7 @@ private func eventTapCallback(
     event: CGEvent,
     refcon: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
-    guard let refcon = refcon else { return Unmanaged.passRetained(event) }
+    guard let refcon = refcon else { return Unmanaged.passUnretained(event) }
     let appDelegate = Unmanaged<AppDelegate>.fromOpaque(refcon).takeUnretainedValue()
 
     switch type {
@@ -47,7 +47,7 @@ private func eventTapCallback(
             f.remove(.maskControl)
             event.flags = f
         }
-        return Unmanaged.passRetained(event)
+        return Unmanaged.passUnretained(event)
 
     case .tapDisabledByTimeout, .tapDisabledByUserInput:
         if let tap = appDelegate.eventTap {
@@ -56,7 +56,7 @@ private func eventTapCallback(
         return nil
 
     default:
-        return Unmanaged.passRetained(event)
+        return Unmanaged.passUnretained(event)
     }
 }
 
